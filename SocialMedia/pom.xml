@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.gb</groupId>
-    <artifactId>SocialNetwork</artifactId>
+    <artifactId>SocialMedia</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SocialNetwork</name>
-    <description>SocialNetwork</description>
+    <name>SocialMedia</name>
+    <description>SocialMedia</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -29,10 +29,17 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.24</version>
+            <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
