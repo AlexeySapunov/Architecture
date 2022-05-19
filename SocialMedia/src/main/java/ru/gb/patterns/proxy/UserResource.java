@@ -4,27 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
 import java.util.List;
 
 @RequestMapping("/api/v1/user")
 @RestController
-public class UserResource {
-
+public class UserResource implements UserService {
+    
     private final UserService userService;
 
     @Autowired
-    public UserResource(UserService userService) {
+    public UserResource(@Usage(Usage.ChoiceUsages.REST) UserService userService) {
         this.userService = userService;
     }
 
     @RequestMapping(value = "/all", produces = "application/json")
-    public List<UserType> getAllUsers() {
+    public List<UserType> findAllUsers() {
         return userService.findAllUsers();
     }
 
     @RequestMapping(value = "/current", produces = "application/json")
-    public UserType currentUser(Principal principal) {
-        return userService.findByUsername(principal.getName());
+    public UserType findByUsername(String username) {
+        return userService.findByUsername(username);
     }
 }
