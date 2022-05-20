@@ -1,6 +1,7 @@
 package ru.gb.patterns.proxy;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository;
-
-    private final BCryptPasswordEncoder passwordEncoder;
-
-    private final Set<String> onlineUsers;
 
     @Autowired
     public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder passwordEncoder) {
@@ -24,6 +19,7 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.onlineUsers = new ConcurrentSkipListSet<>();
     }
+
 
     public void create(UserFormType userFormType) {
         User user = new User();

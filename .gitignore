@@ -1,6 +1,6 @@
 SocialNetwork/HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
+!SocialMedia/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /.idea/
-/.mvn/
+/SocialMedia/.mvn/
