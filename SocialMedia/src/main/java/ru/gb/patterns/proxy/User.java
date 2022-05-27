@@ -1,31 +1,56 @@
 package ru.gb.patterns.proxy;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import ru.gb.patterns.observer.Channel;
-import ru.gb.patterns.observer.Observable;
-import ru.gb.patterns.observer.Subscriber;
+import javax.persistence.*;
 
-import java.util.List;
+@Entity
+@Table(name = "users")
+public class User {
 
-@NoArgsConstructor
-@Getter
-@Setter
-public class User implements Subscriber {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private Long Id;
-
+    @Column(length = 32, nullable = false)
     private String username;
 
+    @Column(length = 128, nullable = false)
     private String password;
 
-    @Override
-    public void inform(Observable observable, Object message) {
-        if (observable instanceof Channel) {
-            Channel channel = (Channel) observable;
-            System.out.println("I got news " + message + " from " + channel.getName());
-            List<String> news = channel.getNews();
-        }
+    public User() {
+    }
+
+    public User(Long id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
