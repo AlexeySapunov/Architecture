@@ -1,8 +1,10 @@
 package ru.gb.patterns.proxy;
 
-import org.springframework.security.core.userdetails.User;
+import java.util.List;
 
 public interface UserService {
 
-    User findUserByUsername(String username);
+     List<UserType> findAllUsers();
+
+     UserType findByUsername(String username);
 }
