@@ -9,10 +9,13 @@ import ru.gb.patterns.proxy.ProxyUserAuthService;
 import ru.gb.patterns.proxy.UserAuthService;
 import ru.gb.patterns.proxy.UserRepo;
 import ru.gb.patterns.proxy.UserService;
+import ru.gb.patterns.relationObject.UnitOfWork;
 
 import java.util.Optional;
 
 public class Main {
+
+    private static UserRepo userRepo;
 
     public static void main(String[] args) {
 
@@ -45,12 +48,46 @@ public class Main {
         badNewsChannel.addNews("Everything is bad");
 
         UserService userService = getUserAuthService();
-        userService.findUserByUsername(new ru.gb.patterns.proxy.User().getUsername());
+        ru.gb.patterns.proxy.User user2 = ru.gb.patterns.proxy.User.builder()
+                .username("Username")
+                .build();
+        userRepo = username -> Optional.of(new ru.gb.patterns.proxy.User(user2.getUsername()));
+        userService.findUserByUsername(userRepo.toString());
+
+        UnitOfWork.newCurrent();
+        ru.gb.patterns.proxy.User.load(1L).ifPresent(user1 -> user1.setJobId(2));
+        ru.gb.patterns.proxy.User user1 = ru.gb.patterns.proxy.User.create("Anatoly", "password", 2L);
+        UnitOfWork.getCurrent().commit();
+        UnitOfWork.setCurrent(null);
+
+        UnitOfWork.newCurrent();
+        Optional<ru.gb.patterns.proxy.User> load = ru.gb.patterns.proxy.User.loadByName(user1.getUsername());
+        if (load.isPresent()) {
+            System.out.println("user1 created");
+            load.get().remove();
+        }
+        UnitOfWork.getCurrent().commit();
+        UnitOfWork.setCurrent(null);
+
+        UnitOfWork.newCurrent();
+        if (load.isPresent()) {
+            load = ru.gb.patterns.proxy.User.load(load.get().getId());
+        }
+        if (load.isEmpty()) {
+            System.out.println("user1 deleted");
+        }
+        UnitOfWork.getCurrent().commit();
+        UnitOfWork.setCurrent(null);
+
+        UnitOfWork.newCurrent();
+        ru.gb.patterns.proxy.User.load(1L);
+        System.out.println("Should be cached");
+        ru.gb.patterns.proxy.User.load(1L);
+        UnitOfWork.getCurrent().commit();
+        UnitOfWork.setCurrent(null);
     }
 
     public static UserService getUserAuthService() {
-        UserRepo userRepo = username -> Optional.empty();
-
         return new ProxyUserAuthService(new UserAuthService(userRepo));
     }
 }
