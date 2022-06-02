@@ -1,7 +1,6 @@
 package ru.gb.patterns;
 
-import ru.gb.patterns.builder.MultimediaBuilder;
-import ru.gb.patterns.builder.MultimediaService;
+import ru.gb.patterns.builder.Multimedia;
 import ru.gb.patterns.builder.User;
 import ru.gb.patterns.observer.Bot;
 import ru.gb.patterns.observer.Channel;
@@ -19,20 +18,20 @@ public class Main {
 
     public static void main(String[] args) {
 
-        User user = User.builder()
-                .username("Username")
-                .email("username@mail.ru")
-                .build();
+        User user = new User();
+        user.setId(1L);
+        user.setUsername("Username");
+        user.setPassword("Password");
+        user.setEmail("user@mail.ru");
 
-        MultimediaService multimedia = new MultimediaBuilder()
-                .id(1L)
-                .username("Multimedia")
-                .contentType("Media file")
-                .storageFileName("storage")
-                .user(user)
-                .build();
+        Multimedia multimedia = new Multimedia();
+        multimedia.setId(1L);
+        multimedia.setName("Multimedia");
+        multimedia.setContentType("Media file");
+        multimedia.setStorageFileName("storage");
+        multimedia.setUser(user);
 
-        System.out.println(multimedia.toString());
+        System.out.println(multimedia);
 
         Channel goodNewsChannel = new Channel("Good news channel");
         Channel badNewsChannel = new Channel("Bad news channel");

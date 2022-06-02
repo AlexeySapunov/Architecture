@@ -1,25 +1,68 @@
 package ru.gb.patterns.builder;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-
 import javax.persistence.OneToMany;
 import java.util.List;
 
-@AllArgsConstructor
-@Builder(toBuilder = true)
-@EqualsAndHashCode
 public class User {
 
-    private final Long id;
+    private Long id;
 
-    private final String username;
+    private String username;
 
-    private final String email;
+    private String email;
 
-    private final String password;
+    private String password;
 
     @OneToMany
-    private final List<Multimedia> multimedia;
+    private List<Multimedia> multimedia;
+
+    public User(Long id, String username, String email, String password) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Multimedia> getMultimedia() {
+        return multimedia;
+    }
+
+    public void setMultimedia(List<Multimedia> multimedia) {
+        this.multimedia = multimedia;
+    }
 }
